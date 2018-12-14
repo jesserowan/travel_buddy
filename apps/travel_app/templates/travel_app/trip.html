@@ -68,7 +68,10 @@
                     <tr>
                         <td colspan="3">
                             {% for traveller in travellers %}
-                                {{traveller.username}},
+                                {% if traveller.username != user.username %}
+                                    {{traveller.username}}{% if traveller.username != last.username %},
+                                    {% endif %}
+                                {% endif %}
                             {% endfor %}
                         </td>
                     </tr>

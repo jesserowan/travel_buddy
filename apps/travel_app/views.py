@@ -72,11 +72,13 @@ def show(request, id):
         user = User.objects.get(id=request.session['user_id'])
         trip = Trip.objects.get(id=id)
         travellers = Trip.objects.get(id=id).travellers.all()
+        last = travellers.last()
         context = {
             "id": id,
             "user": user,
             "trip": trip,
-            "travellers": travellers
+            "travellers": travellers,
+            "last": last
         }
         return render(request, 'travel_app/trip.html', context)
 
