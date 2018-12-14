@@ -49,7 +49,7 @@ class TripManager(models.Manager):
         if form['return_date'] == "":
             errors['no_return'] = "Please enter a return date"
         if form['departure'] != "":
-            if date.fromisoformat(form['departure']) < date.today():
+            if form['departure'] < str(date.today()):
                 errors['future'] = "Your trip should be scheduled in the future"
         if form['departure'] > form['return_date']:
             errors['dates'] = "Please select a return date after your departure date"
