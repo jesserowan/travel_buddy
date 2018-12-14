@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'travel_app/css/style.css' %}">
+    <title>Login & Registration</title>
+</head>
+<body>
+    <div class="topbar">
+            <div class="header">
+                <h1 id="logo">Travel Buddy</h1>
+            </div>
+            <!-- <div class="nav">
+                <a class="btn btn-dark c" href="/success">Home</a>
+                <a class="btn btn-dark c" href="/new">Add a Movie</a>
+                <a class="btn btn-dark c" href="/logout">Log out</a>
+            </div> -->
+        </div>
+    <div class="main">
+        <div class="container">
+            <div class="header">
+                <h1>Registration</h1>
+            </div>
+            <div class="form">
+                <form action="/register" method="POST">
+                    {% csrf_token %}
+                    <label class="form-group">Name</label>
+                    {% for message in messages %}
+                        {% if 'name' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="text" name="name" class="form-control" placeholder="e.g. Jane Doe">
+                    <label class="form-group">Username</label>
+                    {% for message in messages %}
+                        {% if 'user' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% for message in messages %}
+                        {% if 'in_use' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="text" name="username" class="form-control" placeholder="e.g. janedoe1985">
+                    <label class="form-group">Password</label>
+                    {% for message in messages %}
+                        {% if 'pw_length' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="password" class="form-control" name="pw">
+                    <label class="form-group">Confirm Password</label>
+                    {% for message in messages %}
+                        {% if 'match' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="password" class="form-control" name="confirm">
+
+                    <input type="submit" class="btn btn-secondary" value="Register">
+                </form>
+            </div>
+        </div>
+        <div class="container">
+            <div class="header">
+                <h1>Login</h1>
+            </div>
+            <div class="form">
+                <form action="/login" method="POST">
+                    {% csrf_token %}
+                    {% for message in messages %}
+                        {% if 'login' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <label class="form-group">Your username</label>
+                    <input type="text" class="form-control" name="login_username">
+                    <label class="form-group">Your password</label>
+                    <input type="password" class="form-control" name="login_pass">
+                    <input type="submit" class="btn btn-secondary" value="Login">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

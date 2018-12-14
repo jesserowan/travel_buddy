@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'travel_app/css/style.css' %}">
+    <title>Trip to {{trip.destination}}</title>
+</head>
+<body>
+    <div class="topbar">
+        <div class="header">
+            <h1 id="logo">Travel Buddy</h1>
+        </div>
+        <div class="nav">
+            <a class="btn btn-dark c" href="/success">Home</a>
+            <a class="btn btn-dark c" href="/new">Add a Trip</a>
+            <a class="btn btn-dark c" href="/logout">Log out</a>
+        </div>
+    </div>
+    <h1>Welcome, {{ user.username }}</h1>
+    <div class="main2">
+        <div class="container3">
+            {% if trip.planned_by != user and user not in travellers %}
+            <div class="top">
+                <a class="btn btn-secondary" href="/join/{{trip.id}}">Join</a>
+            </div>
+            {% endif %}
+            {% if trip.planned_by == user or user in travellers %}
+                <br><br><br>
+            {% endif %}
+            <table class="table table-dark table-striped table-bordered h">
+                <thead>
+                    <tr>
+                        <th colspan="4">{{ trip.planned_by.username }}'s trip to {{trip.destination}}</th>
+                    </tr>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Departure Date</th>
+                        <th>Return Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{trip.destination}}</td>
+                        <td>{{trip.departure}}</td>
+                        <td>{{trip.return_date}}</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="3">Trip Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">{{trip.description}}</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="3">Other Users who have joined this Trip</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">
+                            {% for traveller in travellers %}
+                                {{traveller.username}},
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

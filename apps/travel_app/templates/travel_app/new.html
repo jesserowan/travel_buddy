@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'travel_app/css/style.css' %}">
+    <title>New Trip</title>
+</head>
+<body>
+    <div class="topbar">
+            <div class="header">
+                <h1 id="logo">Travel Buddy</h1>
+            </div>
+            <div class="nav">
+                <a class="btn btn-dark c" href="/success">Home</a>
+                <a class="btn btn-dark c" href="/new">Add a Trip</a>
+                <a class="btn btn-dark c" href="/logout">Log out</a>
+            </div>
+        </div>
+    <div class="main">
+        <div class="container">
+            <div class="header">
+                <h1>Add a Trip</h1>
+            </div>
+            <div class="form">
+                <form action="/add" method="POST">
+                    {% csrf_token %}
+                    <label class="form-group">Destination</label>
+                    {% for message in messages %}
+                        {% if 'destination' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="text" name="destination" class="form-control" placeholder="e.g. Bora Bora">
+                    <label class="form-group">Description</label>
+                    {% for message in messages %}
+                        {% if 'description' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="text" name="description" class="form-control" placeholder="e.g. Go on a cruise">
+                    <label class="form-group">Departure Date</label>
+                    {% for message in messages %}
+                        {% if 'no_departure' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% for message in messages %}
+                        {% if 'future' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="date" class="form-control" name="departure">
+                    <label class="form-group">Return Date</label>
+                    {% for message in messages %}
+                        {% if 'no_return' in message.tags %}
+                            <div class="fail">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% for message in messages %}
+                        {% if 'dates' in message.tags %}
+                            <div class="fail">
+                                <p>{{message}}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="date" class="form-control" name="return_date">
+
+                    <input type="submit" class="btn btn-secondary" value="Add Trip">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
